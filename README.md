@@ -1,3 +1,3 @@
-# MusicBeats
+# Symphonia
 
-This is a Music Website made with Python Django Framework.
+This is a Music Website built with Python Django Framework.
