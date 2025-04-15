@@ -1,0 +1,87 @@
+{% extends 'musicbeats/basic.htm' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+
+<style>
+    /* 🌙 Dark Theme */
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+  
+    .card {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+    }
+  
+    .card-body h3 {
+      color: #1db954; /* Spotify Green */
+    }
+  
+    .form-label {
+      color: #f1f1f1;
+    }
+  
+    .form-control {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border: 1px solid #444;
+    }
+  
+    .form-control::placeholder {
+      color: #bbbbbb;
+    }
+  
+    .form-control:focus {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border-color: #1db954;
+      box-shadow: 0 0 5px rgba(29, 185, 84, 0.5);
+    }
+  
+    .btn-primary {
+      background-color: #1db954;
+      border: none;
+    }
+  
+    .btn-primary:hover {
+      background-color: #17a34a;
+    }
+  
+    .text-decoration-none {
+      color: #1db954;
+    }
+  
+    .text-decoration-none:hover {
+      color: #17a34a;
+      text-decoration: underline;
+    }
+  </style>  
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 12px;">
+        <div class="card-body">
+            <h3 class="text-center mb-4 text-primary">Login</h3>
+            <form action="/musicbeats/login" method="POST">{% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label fw-bold">Username</label>
+                    <input type="text" class="form-control" id="username" name="username" 
+                           placeholder="Enter your username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-bold">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" 
+                           placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="text-center mt-3">
+                <a href="/musicbeats/signup" class="text-decoration-none">Don't have an account? Sign up</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

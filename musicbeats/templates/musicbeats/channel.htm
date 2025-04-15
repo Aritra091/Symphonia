@@ -1,0 +1,133 @@
+{% extends 'musicbeats/basic.htm' %}
+{% block title %}Channel - {{ channel.name }}{% endblock %}
+
+{% block body %}
+
+<style>
+    /* 🌙 Dark Theme */
+    body {
+      background: #121212;
+      color: #ffffff;
+      font-family: 'Poppins', sans-serif;
+    }
+  
+    h2 {
+      text-align: center;
+      padding-top: 2%;
+      color: #1db954; /* Spotify Green */
+      font-weight: bold;
+      font-size: 2rem;
+    }
+  
+    .container {
+      max-width: 90%;
+      margin: auto;
+      padding: 20px;
+    }
+  
+    .card {
+      background: #1e1e1e;
+      border: none;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+  
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.2);
+    }
+  
+    .card-img {
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px 0 0 12px;
+    }
+  
+    .card-body {
+      padding: 20px;
+    }
+  
+    .card-title {
+      color: #1db954;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+  
+    .card-text {
+      color: #bbbbbb;
+    }
+  
+    .btn-success {
+      background: #1db954;
+      border: none;
+      font-weight: bold;
+      transition: background 0.3s ease-in-out;
+    }
+  
+    .btn-success:hover {
+      background: #179443;
+    }
+  
+    /* 📱 Responsive */
+    @media (max-width: 768px) {
+      .container {
+        max-width: 95%;
+      }
+      
+      .card-img {
+        border-radius: 12px 12px 0 0;
+        height: 200px;
+        width: 100%;
+      }
+      
+      .col-md-4 {
+        width: 100%;
+      }
+      
+      .col-md-8 {
+        width: 100%;
+      }
+    }
+  </style>
+  
+
+<h2 style="text-align: center; padding-top: 2%; color: #D72638; font-weight: bold; font-size: 2rem;">
+    Channel: {{ channel.name }}
+</h2>
+
+<div class="container">
+    {% for i in song reversed %}
+    <div class="card mb-4 shadow-lg" style="max-width: 900px; margin: auto; border-radius: 12px; overflow: hidden;">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="{{ i.image }}" class="card-img" alt="{{ i.name }}" style="height: 100%; object-fit: cover; border-radius: 12px 0 0 12px;">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title" style="color: #007F5F; font-weight: bold; font-size: 1.5rem;">
+                        {{ i.name }}
+                    </h5>
+                    <p class="card-text"><strong>Tags:</strong> {{ i.tags }}</p>
+                    <p class="card-text"><strong>Album:</strong> {{ i.movie }}</p>
+
+                    <div class="d-flex align-items-center">
+                        {% if user.is_authenticated %}
+                        <form action="/musicbeats/history" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="music_id" value="{{ i.song_id }}">
+                            <a href="/musicbeats/songs/{{ i.song_id }}" class="btn btn-success mx-2">🎵 Listen Song</a>
+                        </form>
+                        {% else %}
+                        <a href="/musicbeats/songs/{{ i.song_id }}" class="btn btn-success mx-2">🎵 Listen Song</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

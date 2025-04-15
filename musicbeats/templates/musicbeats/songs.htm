@@ -1,0 +1,170 @@
+{% extends 'musicbeats/basic.htm' %}
+{% block title %}All Songs{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<style>
+  /* 🎵 Page Styling */
+  body {
+    background-color: #f8f9fa;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+  }
+
+  .container {
+    padding: 40px 10%;
+  }
+
+  /* 🎼 Song Cards */
+  .card {
+    max-width: 940px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-title {
+    color: #28a745;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .card-text {
+    color: #555;
+  }
+
+  /* 🎤 Song Image */
+  .card-img {
+    height: 100%;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  /* 🎶 Listen Button */
+  .btn-outline-danger {
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+  .btn-outline-danger:hover {
+    background: #ff4b5c;
+    color: white;
+  }
+
+  /* 📱 Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 20px 5%;
+    }
+    .card {
+      max-width: 100%;
+    }
+    .card-img {
+      border-radius: 12px 12px 0 0;
+    }
+  }
+
+    /* 🌙 Dark Theme */
+    body {
+      background-color: #121212;
+      color: #ffffff;
+    }
+  
+    .card {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+    }
+  
+    .card-body h3 {
+      color: #1db954; /* Spotify Green */
+    }
+  
+    .form-label {
+      color: #f1f1f1;
+    }
+  
+    .form-control {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border: 1px solid #444;
+    }
+  
+    .form-control::placeholder {
+      color: #bbbbbb;
+    }
+  
+    .form-control:focus {
+      background-color: #2a2a2a;
+      color: #ffffff;
+      border-color: #1db954;
+      box-shadow: 0 0 5px rgba(29, 185, 84, 0.5);
+    }
+  
+    .btn-primary {
+      background-color: #1db954;
+      border: none;
+    }
+  
+    .btn-primary:hover {
+      background-color: #17a34a;
+    }
+  
+    .text-decoration-none {
+      color: #1db954 !important;
+    }
+  
+    .text-decoration-none:hover {
+      color: #17a34a !important;
+    }
+</style>
+
+<div class="container">
+  {% for i in song reversed %}
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ i.image }}" class="card-img" alt="Song Image">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ i.name }}</h5>
+          <p class="card-text">🎵 Tags: <strong>{{ i.tags }}</strong></p>
+          <p class="card-text">🎬 Album: <strong>{{ i.movie }}</strong></p>
+          {% if user.is_authenticated %}
+          <form action="/musicbeats/history" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="music_id" value="{{ i.song_id }}">
+            <a href="/musicbeats/songs/{{ i.song_id }}">
+              <button class="btn btn-outline-danger">🎧 Listen Song</button>
+            </a>
+          </form>
+          {% else %}
+          <a href="/musicbeats/songs/{{ i.song_id }}">
+            <button class="btn btn-outline-danger">🎧 Listen Song</button>
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

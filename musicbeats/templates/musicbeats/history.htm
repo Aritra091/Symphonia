@@ -1,0 +1,127 @@
+{% extends 'musicbeats/basic.htm' %}
+{% block title %}MusicBeats - History{% endblock %}
+
+{% block body %}
+{% load static %}
+
+<style>
+  /* 🌙 Dark Theme */
+  body {
+    background: #121212;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .container {
+    max-width: 80%;
+    margin: auto;
+    padding: 30px;
+    background: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
+  }
+
+  h1 {
+    color: #1db954; /* Spotify Green */
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  h3 {
+    text-align: center;
+    font-weight: 500;
+    color: #bbbbbb;
+  }
+
+  .card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #2a2a2a;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 5px 20px rgba(255, 255, 255, 0.15);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-title {
+    color: #1db954;
+    font-weight: 600;
+    font-size: 1.3rem;
+  }
+
+  .card-text {
+    color: #cccccc;
+    font-size: 1rem;
+  }
+
+  .btn-custom {
+    font-weight: bold;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    color: white;
+  }
+
+  .btn-outline-danger {
+    border-color: #ff4b5c;
+    color: #ff4b5c;
+  }
+
+  .btn-outline-danger:hover {
+    background: #ff4b5c;
+    color: white;
+  }
+
+  /* 📱 Responsive */
+  @media (max-width: 768px) {
+    .container {
+      max-width: 95%;
+    }
+  }
+</style>
+
+<h1>🎵 Listening History</h1>
+
+{% if history|length < 1 %}
+  <h3 style="padding-top: 5%;">You have no songs in your History.</h3>
+{% endif %}
+
+<div class="container">
+  {% for i in history reversed %}
+  <div class="card mb-3">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="{{ i.image }}" class="card-img" alt="Song Image">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ i.name }}</h5>
+          <p class="card-text">🎵 Tags: {{ i.tags }}</p>
+          <p class="card-text">🎬 Album: {{ i.movie }}</p>
+          <a href="/musicbeats/songs/{{ i.song_id }}">
+            <button class="btn btn-outline-danger btn-custom">🎧 Listen Again</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
