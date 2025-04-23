@@ -25,7 +25,7 @@ SECRET_KEY = 'vnwh*atll40-nb18nx1n5o00)hv$e0yal+!((nn@i_e5e9s3f0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["symphonia.onrender.com"]
 
 
 # Application definition
