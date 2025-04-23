@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["symphonia.onrender.com"]
 
+CSRF_TRUSTED_ORIGINS = ['https://symphonia.onrender.com']
+
 
 # Application definition
 
